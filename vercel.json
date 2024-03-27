@@ -1,0 +1,38 @@
+{
+    "routes": [
+        {
+            "src": "/dev",
+            "dest": "/api/dev/index.go"
+        },
+        {
+            "src": "/ws/push/.*",
+            "dest": "/api/push/index.go"
+        },
+        {
+            "src": "/ws/push_v2/.*",
+            "dest": "/api/push_v2/index.go"
+        },
+        {
+            "src": "/setWebhook/.*",
+            "dest": "/api/setwebhook/index.go"
+        },
+        {
+            "src": "/webhook/.*",
+            "dest": "/api/index.go"
+        },
+        {
+            "src": "/index.html",
+            "headers": {
+                "Cache-Control": "public, max-age=3600"
+            },
+            "dest": "/public/index.html"
+        },
+        {
+            "src": "/favicon.ico",
+            "headers": {
+                "Cache-Control": "public, max-age=3600"
+            },
+            "continue": true
+        }
+    ]
+}
