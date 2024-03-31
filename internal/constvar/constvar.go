@@ -10,7 +10,7 @@ func Version() string {
 }
 
 func Usage() string {
-	return APP_ABOUT + "\n" + "交流TG群: @baicai_dev"
+	return APP_ABOUT + "\n" + "I am Annona! TG频道: @annonaOrg"
 }
 func About() string {
 	text := "Annono Bot v" + APP_VERSION + "\n" + Usage()
