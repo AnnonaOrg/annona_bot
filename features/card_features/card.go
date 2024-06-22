@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strconv"
 
+	"github.com/AnnonaOrg/annona_bot/internal/constvar"
+
 	"github.com/AnnonaOrg/annona_bot/features"
 	model_func "github.com/AnnonaOrg/annona_bot/internal/card_func"
 	model "github.com/AnnonaOrg/annona_bot/model/card_info"
@@ -73,7 +75,7 @@ func OnConvertCardInfo(c tele.Context) error {
 
 	if retText, err := model_func.DoConvert(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -136,7 +138,7 @@ func OnAddCardInfo(c tele.Context) error {
 
 	if retText, err := model_func.DoAdd(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -161,7 +163,7 @@ func OnGetCardInfo(c tele.Context) error {
 
 	if retText, err := model_func.DoGet(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)

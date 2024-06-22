@@ -47,7 +47,7 @@ func OnRegUserInfo(c tele.Context) error {
 	item.TelegramLasttname = c.Message().Sender.LastName
 
 	if _, err := model_func.DoAdd(&item); err != nil {
-		helloStr = fmt.Sprintf("%s \n出了点问题: %v", helloStr, err)
+		helloStr = fmt.Sprintf("%s \n出了点问题: %v", helloStr, constvar.ERR_MSG_Server)
 	}
 	return c.Reply(helloStr)
 }
@@ -82,7 +82,7 @@ func OnGetUserInfo(c tele.Context) error {
 
 	if retText, err := model_func.DoGet(&item); err != nil {
 		return c.Reply(
-			helloStr + fmt.Sprintf("出了点问题: %v", err),
+			helloStr + fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(
@@ -125,7 +125,7 @@ func OnRenewUserInfo(c tele.Context) error {
 
 	if retText, err := model_func.DoRenew(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -164,7 +164,7 @@ func OnQianDao(c tele.Context) error {
 
 	if retText, err := model_func.DoSign(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -207,7 +207,7 @@ func OnUpdateNoticeChatId(c tele.Context) error {
 
 	if retText, err := model_func.DoUpdateNoticeChatId(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)

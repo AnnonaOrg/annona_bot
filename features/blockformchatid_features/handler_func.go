@@ -48,7 +48,7 @@ func OnAdd(c tele.Context) error {
 
 	if retText, err := model_func.DoAdd(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -80,7 +80,7 @@ func OnDel(c tele.Context) error {
 
 	if retText, err := model_func.DoDel(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -105,7 +105,7 @@ func OnDelall(c tele.Context) error {
 
 	if retText, err := model_func.DoDelall(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)
@@ -130,7 +130,7 @@ func OnList(c tele.Context) error {
 
 	if retText, err := model_func.DoList(&item); err != nil {
 		return c.Reply(
-			fmt.Sprintf("出了点问题: %v", err),
+			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
 		return c.Reply(retText)

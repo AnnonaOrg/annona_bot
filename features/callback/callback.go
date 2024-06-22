@@ -63,7 +63,7 @@ func OnCallback(c tele.Context) error {
 
 			if retText, err := model_func.DoAdd(&item); err != nil {
 				return c.Reply(
-					fmt.Sprintf("出了点问题: %v", err),
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
 				return c.Reply(retText)
@@ -79,7 +79,7 @@ func OnCallback(c tele.Context) error {
 
 			if retText, err := model_func2.DoAdd(&item); err != nil {
 				return c.Reply(
-					fmt.Sprintf("出了点问题: %v", err),
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
 				return c.Reply(retText)
@@ -95,7 +95,7 @@ func OnCallback(c tele.Context) error {
 
 			if retText, err := keyword_func.DoAdd(&item); err != nil {
 				return c.Reply(
-					fmt.Sprintf("出了点问题: %v", err),
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
 				return c.Reply(retText)
@@ -111,7 +111,7 @@ func OnCallback(c tele.Context) error {
 
 			if retText, err := keyword_func.DoDel(&item); err != nil {
 				return c.Reply(
-					fmt.Sprintf("出了点问题: %v", err),
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
 				return c.Reply(retText)
@@ -127,7 +127,7 @@ func OnCallback(c tele.Context) error {
 
 			if retText, err := blockword_func.DoAdd(&item); err != nil {
 				return c.Reply(
-					fmt.Sprintf("出了点问题: %v", err),
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
 				return c.Reply(retText)
@@ -143,7 +143,7 @@ func OnCallback(c tele.Context) error {
 
 			if retText, err := blockword_func.DoDel(&item); err != nil {
 				return c.Reply(
-					fmt.Sprintf("出了点问题: %v", err),
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
 				return c.Reply(retText)

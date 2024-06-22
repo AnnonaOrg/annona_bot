@@ -49,7 +49,10 @@ func Onstart(c tele.Context) error {
 	}
 
 	if _, err := model_func.DoAdd(&item); err != nil {
-		helloStr = fmt.Sprintf("%s \n出了点小问题: %v", helloStr, err)
+		helloStr = fmt.Sprintf("%s \n出了点小问题: %v", helloStr, constvar.ERR_MSG_Server)
+		if osenv.IsBotManagerID(c.Message().Sender.ID) {
+			helloStr = fmt.Sprintf("%s \n出了点小问题: %v", helloStr, err)
+		}
 	}
 
 	if osenv.IsBotManagerID(c.Message().Sender.ID) {
