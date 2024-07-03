@@ -118,6 +118,14 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 			Description: "列出屏蔽关键词",
 		},
 		{
+			Text:        "/byid",
+			Description: "通过用户ID查询",
+		},
+		{
+			Text:        "/byworld",
+			Description: "通过关键词查询",
+		},
+		{
 			Text:        "/reguser",
 			Description: "注册登记",
 		},

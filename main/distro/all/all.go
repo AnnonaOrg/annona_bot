@@ -21,4 +21,6 @@ import (
 	_ "github.com/AnnonaOrg/annona_bot/features/text"
 
 	_ "github.com/AnnonaOrg/annona_bot/features/newbot_features"
+
+	_ "github.com/AnnonaOrg/annona_bot/features/keyword_history_features"
 )
