@@ -51,7 +51,7 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error
 	req := &request.KeyworldHistoryInfoRequest{}
 	req.SenderId = senderID
 	req.Page = page
-	req.Size = 50
+	req.Size = 30
 	retList, err := GetListKeyworldHistory(req)
 	if err != nil {
 		return constvar.ERR_MSG_Server, err
