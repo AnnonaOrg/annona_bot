@@ -3,7 +3,6 @@ package service
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 
 	"github.com/AnnonaOrg/annona_bot/internal/constvar"
 	"github.com/AnnonaOrg/annona_bot/internal/log"
