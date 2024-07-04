@@ -2,8 +2,11 @@ package callback
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 	"time"
+
+	"github.com/AnnonaOrg/annona_bot/internal/service"
 
 	"github.com/AnnonaOrg/annona_bot/internal/blockword_func"
 	"github.com/AnnonaOrg/annona_bot/model/blockword_info"
@@ -54,6 +57,33 @@ func OnCallback(c tele.Context) error {
 	// return c.Reply("payloadBody: " + payloadBody)
 	// block_formsenderid
 	switch {
+	case strings.HasPrefix(payload, "/by_formsenderid"):
+		{
+			bySenderID, err := strconv.ParseInt(payloadBody, 10, 64)
+			if err != nil {
+				return c.Reply(
+					fmt.Sprintf("出了点问题: %v", payloadBody),
+				)
+			}
+
+			if retText, err := service.GetListKeyworldHistoryWithSenderID(bySenderID, 1); err != nil {
+				return c.Reply(
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
+				)
+			} else {
+				return c.Reply(retText)
+			}
+		}
+	case strings.HasPrefix(payload, "/by_formkeyworld"):
+		{
+			if retText, err := service.GetListKeyworldHistoryWithKeyworld(payloadBody, 1); err != nil {
+				return c.Reply(
+					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
+				)
+			} else {
+				return c.Reply(retText)
+			}
+		}
 	case strings.HasPrefix(payload, "/block_formchatid"):
 		{
 			var item model.BlockformchatidInfo
