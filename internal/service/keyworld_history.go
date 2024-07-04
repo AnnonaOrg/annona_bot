@@ -86,6 +86,8 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		senderUsername := v.SenderUsername
 		if len(senderUsername) > 0 {
 			senderUsername = "@" + senderUsername
+		} else {
+			continue
 		}
 		retText = fmt.Sprintf("%s\n %d. %s", retText,
 			k, senderUsername,
