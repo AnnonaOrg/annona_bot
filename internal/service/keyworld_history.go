@@ -41,6 +41,7 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 		item.SenderUsername = vc.SenderUsername
 		item.SenderId = vc.SenderId
 		item.KeyWorld = vc.KeyWorld
+		item.Total = vc.Total
 		list = append(list, item)
 	}
 	return list, nil
