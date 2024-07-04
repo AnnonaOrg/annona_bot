@@ -82,14 +82,15 @@ func buildMsgDataAndSend(msg FeedRichMsgModel,
 		} else {
 			noButton = true
 		}
-		btnSender := selector.Data("屏蔽用户", "/block_formsenderid", msg.FormInfo.FormSenderID)
-		btnChat := selector.Data("屏蔽群组", "/block_formchatid", msg.FormInfo.FormChatID)
-		// btnByID := selector.Data("ID", "/by_formsenderid", msg.FormInfo.FormSenderID)
-		// btnByKeyworld := selector.Data("关键词", "/by_formkeyworld", msg.FormInfo.FormKeyworld)
+		btnSender := selector.Data("屏蔽号", "/block_formsenderid", msg.FormInfo.FormSenderID)
+		btnChat := selector.Data("屏蔽群", "/block_formchatid", msg.FormInfo.FormChatID)
+		btnByID := selector.Data("记录", "/by_formsenderid", msg.FormInfo.FormSenderID)
+		btnByKeyworld := selector.Data("关键词", "/by_formkeyworld", msg.FormInfo.FormKeyworld)
+		btnChatLink := selector.URL("私聊", "tg://user?id="+msg.FormInfo.FormSenderID)
 		btnLink := selector.URL("定位消息", msg.Link)
 		selector.Inline(
-			selector.Row(btnLink),
-			selector.Row(btnSender, btnChat),
+			selector.Row(btnLink, btnByID, btnChatLink),
+			selector.Row(btnSender, btnChat, btnByKeyworld),
 		)
 	}
 
