@@ -23,4 +23,5 @@ type KeyworldHistoryInfoItem struct {
 	MessageContentText string `json:"message_content_text" form:"message_content_text" gorm:"column:message_content_text;"`
 
 	KeyWorld string `json:"key_world" form:"key_world" gorm:"column:key_world;"`
+	Total    int64  `json:"total" form:"total" gorm:"column:total;"`
 }

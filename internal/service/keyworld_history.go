@@ -83,8 +83,8 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		if len(senderUsername) > 0 {
 			senderUsername = "@" + senderUsername
 		}
-		retText = fmt.Sprintf("%s\n %d. %s #ID%d ", retText,
-			k, senderUsername, v.SenderId,
+		retText = fmt.Sprintf("%s\n %d. %s #ID%d [%d]", retText,
+			k, senderUsername, v.SenderId, v.Total,
 		)
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
