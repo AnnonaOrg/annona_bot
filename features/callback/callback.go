@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AnnonaOrg/annona_bot/internal/log"
+
 	"github.com/AnnonaOrg/annona_bot/internal/service"
 
 	"github.com/AnnonaOrg/annona_bot/internal/blockword_func"
@@ -24,7 +26,6 @@ import (
 	"github.com/AnnonaOrg/annona_bot/internal/constvar"
 	"github.com/AnnonaOrg/osenv"
 
-	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -45,6 +46,7 @@ func OnCallback(c tele.Context) error {
 
 	payload := c.Callback().Data
 	payload = strings.TrimSpace(payload)
+	log.Debugf("Callback().Data: %s", payload)
 	payloadBody := ""
 	if _, a, f := strings.Cut(payload, "|"); f && len(a) > 0 {
 		payloadBody = a
