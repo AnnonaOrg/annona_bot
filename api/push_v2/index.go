@@ -84,6 +84,8 @@ func buildMsgDataAndSend(msg FeedRichMsgModel,
 		}
 		btnSender := selector.Data("屏蔽用户", "/block_formsenderid", msg.FormInfo.FormSenderID)
 		btnChat := selector.Data("屏蔽群组", "/block_formchatid", msg.FormInfo.FormChatID)
+		// btnByID := selector.Data("ID", "/by_formsenderid", msg.FormInfo.FormSenderID)
+		// btnByKeyworld := selector.Data("关键词", "/by_formkeyworld", msg.FormInfo.FormKeyworld)
 		btnLink := selector.URL("定位消息", msg.Link)
 		selector.Inline(
 			selector.Row(btnLink),
@@ -245,6 +247,8 @@ type FeedRichMsgChatInfoModel struct {
 type FeedRichMsgFormInfoModel struct {
 	FormChatID   string `json:"formChatID" form:"formChatID"`
 	FormSenderID string `json:"formSenderID" form:"formSenderID"`
+
+	FormKeyworld string `json:"formKeyworld" form:"formKeyworld"`
 }
 
 func (msg *FeedRichMsgModel) ToString() (res string) {
