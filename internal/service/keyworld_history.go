@@ -62,13 +62,9 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error
 		if len(v.SenderUsername) > 0 && len(senderUsername) == 0 {
 			senderUsername = "@" + v.SenderUsername
 		}
-		keyworld := strings.ReplaceAll(v.KeyWorld, ",", " #")
-		if len(keyworld) > 0 {
-			keyworld = "#" + keyworld
-		}
 		messageContentText := utils.GetStringRuneN(v.MessageContentText, 20)
-		retText = fmt.Sprintf("%s\n %d. %s %s", retText,
-			k, keyworld, messageContentText,
+		retText = fmt.Sprintf("%s\n %d. %s", retText,
+			k, messageContentText,
 		)
 	}
 	if len(retText) > 0 {
