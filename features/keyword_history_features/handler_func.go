@@ -3,6 +3,7 @@ package keyword_history_features
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/AnnonaOrg/annona_bot/features"
@@ -36,7 +37,8 @@ func OnByID(c tele.Context) error {
 		)
 	}
 
-	userID, err := strconv.ParseInt(c.Message().Payload, 10, 64)
+	payload := strings.TrimSpace(c.Message().Payload)
+	userID, err := strconv.ParseInt(payload, 10, 64)
 	if err != nil {
 		return c.Reply(
 			"参考指令格式: \n"+
@@ -71,9 +73,8 @@ func OnByWorld(c tele.Context) error {
 			tele.ModeMarkdownV2,
 		)
 	}
-
-	keyworld := c.Message().Payload
-	retText, err := service.GetListKeyworldHistoryWithKeyworld(keyworld, 1)
+	payload := strings.TrimSpace(c.Message().Payload)
+	retText, err := service.GetListKeyworldHistoryWithKeyworld(payload, 1)
 	if err != nil {
 		return c.Reply(
 			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
