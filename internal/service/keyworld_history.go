@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/AnnonaOrg/annona_bot/internal/constvar"
 	"github.com/AnnonaOrg/annona_bot/internal/log"
@@ -58,13 +59,20 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error
 	retText := ""
 	senderUsername := ""
 	for k, v := range retList {
-		senderUsername = v.SenderUsername
-		retText = fmt.Sprintf("%s\n %d. #%s %s", retText,
-			k, v.KeyWorld, v.MessageContentText,
+		if len(v.SenderUsername) > 0 && len(senderUsername) == 0 {
+			senderUsername = "@" + v.SenderUsername
+		}
+		keyworld := strings.ReplaceAll(v.KeyWorld, ",", " #")
+		if len(keyworld) > 0 {
+			keyworld = "#" + keyworld
+		}
+		messageContentText := utils.GetStringRuneN(v.MessageContentText, 20)
+		retText = fmt.Sprintf("%s\n %d. %s %s", retText,
+			k, keyworld, messageContentText,
 		)
 	}
-	if len(retText) > 0 && len(senderUsername) > 0 {
-		retText = "@" + senderUsername + retText
+	if len(retText) > 0 {
+		retText = fmt.Sprintf("#ID%d ", senderID) + senderUsername + retText
 	}
 	return retText, nil
 }
