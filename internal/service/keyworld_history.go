@@ -50,7 +50,7 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error
 	req := &request.KeyworldHistoryInfoRequest{}
 	req.SenderId = senderID
 	req.Page = page
-	req.Size = 30
+	req.Size = 50
 	retList, err := GetListKeyworldHistory(req)
 	if err != nil {
 		return constvar.ERR_MSG_Server, err
@@ -87,8 +87,8 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		if len(senderUsername) > 0 {
 			senderUsername = "@" + senderUsername
 		}
-		retText = fmt.Sprintf("%s\n %d. %s #ID%d [%d 次]", retText,
-			k, senderUsername, v.SenderId, v.Total,
+		retText = fmt.Sprintf("%s\n %s", retText,
+			k, senderUsername,
 		)
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
