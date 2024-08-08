@@ -3,6 +3,7 @@ package wspush
 import (
 	"io"
 
+	"github.com/AnnonaOrg/annona_bot/core/service"
 	"github.com/AnnonaOrg/annona_bot/handler"
 	"github.com/AnnonaOrg/pkg/errno"
 	"github.com/gin-gonic/gin"
@@ -25,7 +26,7 @@ func WSPush(c *gin.Context) {
 		return
 	}
 
-	if err := PushMsgData(body); err != nil {
+	if err := service.PushMsgData(body); err != nil {
 		handler.SendResponse(c, errno.InternalServerError, "")
 		log.Errorf("PushMsgData(%s): %v", string(body), err)
 		return

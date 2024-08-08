@@ -1,4 +1,4 @@
-package wspush
+package service
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/AnnonaOrg/annona_bot/core/response"
-	"github.com/AnnonaOrg/annona_bot/core/service"
+	// "github.com/AnnonaOrg/annona_bot/core/service"
 	"github.com/AnnonaOrg/annona_bot/core/utils"
 	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
@@ -31,18 +31,18 @@ func PushMsgData(data []byte) error {
 		// 	}
 		// }
 
-		if _, ok := service.FIFOMapGet(msgID); ok {
+		if _, ok := FIFOMapGet(msgID); ok {
 			return fmt.Errorf("msgID去重(%s)", msg.MsgID)
 		} else {
-			service.FIFOMapSet(msgID, true)
-			if c := service.FIFOMapCount(); c > 100 {
-				service.FIFOMapRemoveOldest()
+			FIFOMapSet(msgID, true)
+			if c := FIFOMapCount(); c > 100 {
+				FIFOMapRemoveOldest()
 			}
 		}
 	}
 
 	// return buildMsgDataAndSend(msg, SendMessage)
-	return buildMsgDataAndSend(msg, service.SendMessage)
+	return buildMsgDataAndSend(msg, SendMessage)
 }
 
 func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
