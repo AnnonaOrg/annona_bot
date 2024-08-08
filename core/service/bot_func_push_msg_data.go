@@ -57,11 +57,15 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		btnLink := selector.URL("定位消息", msg.Link)
 		btnByID := selector.Data("记录", "/by_formsenderid", msg.FormInfo.FormSenderID)
 		btnChatLink := selector.URL("私聊", "tg://user?id="+msg.FormInfo.FormSenderID)
+		selector.User("私聊",)
 
 		selector.Inline(
 			selector.Row(btnSender, btnChat, btnByKeyworld),
 			selector.Row(btnLink, btnByID, btnChatLink),
 		)
+		log.Debugf("btnLink: %+v", btnLink)
+		log.Debugf("btnByID: %+v", btnByID)
+		log.Debugf("btnChatLink: %+v", btnChatLink)
 	}
 
 	switch msg.Msgtype {
