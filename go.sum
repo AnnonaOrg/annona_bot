@@ -56,6 +56,8 @@ cloud.google.com/go/storage v1.14.0/go.mod h1:GrKmX003DSIwi9o29oFT7YDnHYwZoctc3f
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/AnnonaOrg/osenv v0.1.14 h1:kdGKvDKa6PtqwPtjab8MQXdAp4Dsk3Sjg2A36JosmqY=
 github.com/AnnonaOrg/osenv v0.1.14/go.mod h1:s7SfWcnwh1NBcHGVK8xFR1DcySlHEf5Ya0dOnLsn2Zk=
+github.com/AnnonaOrg/osenv v0.1.15 h1:zuUzmBnzrGtof87uRooUNFGqBSBCdL/FWGAQxtWia4I=
+github.com/AnnonaOrg/osenv v0.1.15/go.mod h1:s7SfWcnwh1NBcHGVK8xFR1DcySlHEf5Ya0dOnLsn2Zk=
 github.com/AnnonaOrg/pkg/errno v0.0.0-20240408104401-3a28f6d71490 h1:okeJPPuKwOG/fWW9lQQbSgZAdMUfrlBiZHHXsdz6Q8Q=
 github.com/AnnonaOrg/pkg/errno v0.0.0-20240408104401-3a28f6d71490/go.mod h1:i6/6QX94CMZrkN6WomqLV+bRKz083oQ3spGV6T4CZFI=
 github.com/AnnonaOrg/pkg/godotenv v0.0.0-20240408104401-3a28f6d71490 h1:trLNKHWPWiod7h4gR55IIu3e2LGm3oUKCUTn8EEIWVM=
