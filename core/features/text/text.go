@@ -3,6 +3,8 @@ package text
 import (
 	"time"
 
+	"github.com/AnnonaOrg/annona_bot/core/service"
+
 	"github.com/AnnonaOrg/annona_bot/core/constvar"
 	"github.com/AnnonaOrg/annona_bot/core/features"
 	"github.com/AnnonaOrg/annona_bot/core/utils"
@@ -34,13 +36,19 @@ func OnTextEx(c tele.Context) error {
 	btnAddBlockword := selector.Data("添加屏蔽词", "/add_blockword", text)
 	btnDelBlockword := selector.Data("删除屏蔽词", "/del_blockword", text)
 	btnLink := selector.URL("购买充值卡🛒", "https://t.me/annonaCardBot")
-	btnLinkServiceSupport := selector.URL("支持频道✅", "https://t.me/annonaOrg")
+	if link := service.GetURLCardbot(); len(link) > 0 {
+		btnLink = selector.URL("购买充值卡🛒", link)
+	}
+	// btnLinkServiceSupport := selector.URL("支持频道✅", "https://t.me/annonaOrg")
 	btnLinkSubmitNewGroup := selector.URL("提交群组📨", "https://t.me/annonaGroup")
+	if link := service.GetURLSubmitNewGroup(); len(link) > 0 {
+		btnLinkSubmitNewGroup = selector.URL("提交群组📨", link)
+	}
 	selector.Inline(
 		selector.Row(btnAddKeyword, btnDelKeyword),
 		selector.Row(btnAddBlockword, btnDelBlockword),
-		selector.Row(btnLinkServiceSupport, btnLinkSubmitNewGroup),
-		selector.Row(btnLink),
+		// selector.Row(btnLinkServiceSupport, btnLinkSubmitNewGroup),
+		selector.Row(btnLink, btnLinkSubmitNewGroup),
 	)
 
 	c.Reply(text, selector)

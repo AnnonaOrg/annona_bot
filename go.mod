@@ -3,7 +3,7 @@ module github.com/AnnonaOrg/annona_bot
 go 1.22.1
 
 require (
-	github.com/AnnonaOrg/osenv v0.1.14
+	github.com/AnnonaOrg/osenv v0.1.15
 	github.com/AnnonaOrg/pkg/errno v0.0.0-20240408104401-3a28f6d71490
 	github.com/AnnonaOrg/pkg/godotenv v0.0.0-20240408104401-3a28f6d71490
 	github.com/gin-gonic/gin v1.10.0
