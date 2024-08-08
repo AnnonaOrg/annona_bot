@@ -1,8 +1,8 @@
 version: "3"
 services:
-  sendtome:
-    image:  annona/sendtome:latest
-    container_name: sendtome
+  annona_bot:
+    image:  annona/annona_bot:latest
+    container_name: annona_bot
     restart: always
     #build: .
     volumes:
