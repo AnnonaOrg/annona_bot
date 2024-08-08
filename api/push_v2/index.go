@@ -9,7 +9,8 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/clin003/util"
+	"github.com/AnnonaOrg/annona_bot/core/utils"
+
 	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
 )
@@ -106,7 +107,7 @@ func buildMsgDataAndSend(msg FeedRichMsgModel,
 			m.Caption = msg.Video.Caption
 		}
 		if len(m.Caption) > 0 {
-			if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+			if captionTmp, err := utils.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
 			} else {
 				m.Caption = captionTmp
 			}
@@ -120,7 +121,7 @@ func buildMsgDataAndSend(msg FeedRichMsgModel,
 			m.Caption = msg.Image.Caption
 		}
 		if len(m.Caption) > 0 {
-			if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+			if captionTmp, err := utils.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
 			} else {
 				m.Caption = captionTmp
 			}
@@ -139,7 +140,7 @@ func buildMsgDataAndSend(msg FeedRichMsgModel,
 					m.Caption = msg.Text.Content
 				}
 				if len(m.Caption) > 0 {
-					if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+					if captionTmp, err := utils.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
 					} else {
 						m.Caption = captionTmp
 					}
@@ -156,7 +157,7 @@ func buildMsgDataAndSend(msg FeedRichMsgModel,
 					m.Caption = msg.Text.Content
 				}
 				if len(m.Caption) > 0 {
-					if captionTmp, err := util.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
+					if captionTmp, err := utils.UrlRegMatchReplaceToTGHTML(m.Caption); err != nil {
 					} else {
 						m.Caption = captionTmp
 					}

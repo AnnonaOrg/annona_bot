@@ -7,11 +7,9 @@ import (
 	"strings"
 
 	log "github.com/sirupsen/logrus"
-
 	// "github.com/AnnonaOrg/annona_bot/common"
-	"github.com/AnnonaOrg/annona_bot/features"
-	_ "github.com/AnnonaOrg/annona_bot/main/distro/all"
-
+	_ "github.com/AnnonaOrg/annona_bot/cmd/annona_bot/distro/all"
+	"github.com/AnnonaOrg/annona_bot/core/features"
 	tele "gopkg.in/telebot.v3"
 )
 
