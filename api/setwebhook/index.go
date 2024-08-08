@@ -5,11 +5,10 @@ import (
 	"os"
 	"strings"
 
-	log "github.com/sirupsen/logrus"
-
+	_ "github.com/AnnonaOrg/annona_bot/cmd/annona_bot/distro/all"
 	"github.com/AnnonaOrg/annona_bot/common"
-	_ "github.com/AnnonaOrg/annona_bot/main/distro/all"
-	"github.com/AnnonaOrg/annona_bot/utils"
+	"github.com/AnnonaOrg/annona_bot/core/utils"
+	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
 )
 

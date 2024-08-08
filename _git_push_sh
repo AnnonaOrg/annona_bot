@@ -1,22 +1,22 @@
 #!/bin/bash
 
-VERSION=0.1.0
+VERSION=0.2.0
 APPNAME=annona_bot
 APPGITUSER=AnnonaOrg
 echo ${APPNAME}
-echo "package constvar" > ./internal/constvar/version.go
-echo "const(APP_NAME = \"${APPNAME}\"" >> ./internal/constvar/version.go
-echo "APP_VERSION = \"${VERSION}\")" >> ./internal/constvar/version.go
-go fmt ./internal/constvar
+echo "package constvar" > ./core/constvar/version.go
+echo "const(APP_NAME = \"${APPNAME}\"" >> ./core/constvar/version.go
+echo "APP_VERSION = \"${VERSION}\")" >> ./core/constvar/version.go
+go fmt ./core/constvar
 
-rm ./main/main
+rm ./cmd/annona_bot/annona_bot
 #git init #
 git add .
 git commit -m "v${VERSION} debug"
 #git remote add github git@github.com:${APPGITUSER}/${APPNAME}.git #
 #git branch -M main #
-git push -u github main
+git push -u origin main
 
 git tag "v${VERSION}"
-git push --tags  -u github main
+git push --tags  -u origin main
 ## git remote -v
