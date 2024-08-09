@@ -45,6 +45,8 @@ type FeedRichMsgChatInfoModel struct {
 }
 
 type FeedRichMsgFormInfoModel struct {
+	FormMessageID int64 `json:"formMessageID" form:"formMessageID"`
+
 	FormChatID       string `json:"formChatID" form:"formChatID"`
 	FormChatUsername string `json:"formChatUsername" form:"formChatUsername"`
 	FormChatTitle    string `json:"formChatTitle" form:"formChatTitle"`
