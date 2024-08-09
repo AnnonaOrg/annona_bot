@@ -55,13 +55,17 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		btnByKeyworld := selector.Data("关键词", "/by_formkeyworld", msg.FormInfo.FormKeyworld)
 
 		btnLink := selector.URL("定位消息", msg.Link)
-		if len(msg.Link) == 0 && len(msg.FormInfo.FormChatUsername) > 0 {
-			btnLink = selector.URL("定位消息", "https://t.me/"+msg.FormInfo.FormChatUsername)
+		if len(msg.Link) == 0 {
+			if len(msg.FormInfo.FormChatUsername) > 0 {
+				btnLink = selector.URL("定位消息", "https://t.me/"+msg.FormInfo.FormChatUsername)
+			} else {
+				btnLink = selector.URL("定位消息", "t.me/c/"+msg.FormInfo.FormChatID+"/"+fmt.Sprintf("%d", msg.FormInfo.FormMessageID))
+			}
 		}
 		btnByID := selector.Data("记录", "/by_formsenderid", msg.FormInfo.FormSenderID)
 		btnChatLink := selector.URL("私聊", "tg://user?id="+msg.FormInfo.FormSenderID)
-		if len(msg.FormInfo.FormChatUsername) > 0 {
-			btnChatLink = selector.URL("私聊", "https://t.me/"+msg.FormInfo.FormChatUsername)
+		if len(msg.FormInfo.FormSenderUsername) > 0 {
+			btnChatLink = selector.URL("私聊", "https://t.me/"+msg.FormInfo.FormSenderUsername)
 		}
 
 		selector.Inline(
