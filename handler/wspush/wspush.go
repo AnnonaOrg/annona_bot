@@ -28,8 +28,9 @@ func WSPush(c *gin.Context) {
 
 	if err := service.PushMsgData(body); err != nil {
 		handler.SendResponse(c, errno.InternalServerError, "")
-		log.Errorf("PushMsgData(%s): %v", string(body), err)
+		log.Errorf("PushMsgData(err: %v): %s", string(body), err)
 		return
 	}
+	log.Debugf("PushMsgData(ok): %s", string(body))
 	handler.SendResponse(c, nil, "ok")
 }
