@@ -45,8 +45,13 @@ type FeedRichMsgChatInfoModel struct {
 }
 
 type FeedRichMsgFormInfoModel struct {
-	FormChatID   string `json:"formChatID" form:"formChatID"`
-	FormSenderID string `json:"formSenderID" form:"formSenderID"`
+	FormChatID       string `json:"formChatID" form:"formChatID"`
+	FormChatUsername string `json:"formChatUsername" form:"formChatUsername"`
+	FormChatTitle    string `json:"formChatTitle" form:"formChatTitle"`
+
+	FormSenderID       string `json:"formSenderID" form:"formSenderID"`
+	FormSenderUsername string `json:"formSenderUsername" form:"formSenderUsername"`
+	FormSenderTitle    string `json:"formSenderTitle" form:"formSenderTitle"`
 
 	FormKeyworld string `json:"formKeyworld" form:"formKeyworld"`
 }
