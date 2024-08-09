@@ -57,6 +57,9 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		btnLink := selector.URL("定位消息", msg.Link)
 		btnByID := selector.Data("记录", "/by_formsenderid", msg.FormInfo.FormSenderID)
 		btnChatLink := selector.URL("私聊", "tg://user?id="+msg.FormInfo.FormSenderID)
+		if len(msg.FormInfo.FormChatUsername) > 0 {
+			btnChatLink = selector.URL("私聊", "https://t.me/"+msg.FormInfo.FormChatUsername)
+		}
 
 		selector.Inline(
 			selector.Row(btnSender, btnChat, btnByKeyworld),
