@@ -59,7 +59,8 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			if len(msg.FormInfo.FormChatUsername) > 0 {
 				btnLink = selector.URL("定位消息", "https://t.me/"+msg.FormInfo.FormChatUsername)
 			} else {
-				btnLink = selector.URL("定位消息", "https://t.me/c/"+msg.FormInfo.FormChatID+"/"+fmt.Sprintf("%d", msg.FormInfo.FormMessageID))
+				formChatIDStr := strings.TrimPrefix(msg.FormInfo.FormChatID, "-100")
+				btnLink = selector.URL("定位消息", "https://t.me/c/"+formChatIDStr+"/"+fmt.Sprintf("%d", msg.FormInfo.FormMessageID))
 			}
 		}
 		btnByID := selector.Data("记录", "/by_formsenderid", msg.FormInfo.FormSenderID)
