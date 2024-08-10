@@ -25,7 +25,7 @@ func SendMessage(botToken string, reciverId int64, m interface{}, parseMode tele
 		}
 	} else {
 		if _, err := bot.Send(reciver, m, parseMode, button); err != nil {
-			log.Errorf("Send(%s,%d,%#v,%v) Msg Error: %v", botToken, reciverId, m, parseMode, err)
+			log.Errorf("Send(%s,%d,%#v,%v,%+v) Msg Error: %v", botToken, reciverId, m, parseMode, button, err)
 			return err
 		}
 	}
