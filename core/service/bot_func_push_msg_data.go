@@ -90,6 +90,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	} else if len(msg.Text.ContentHtml) > 0 {
 		messageContentText = msg.Text.ContentHtml
 	}
+	fmt.Println("messageContentText", messageContentText)
 
 	switch msg.Msgtype {
 	case "text":
