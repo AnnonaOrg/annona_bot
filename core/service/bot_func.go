@@ -1,7 +1,7 @@
 package service
 
 import (
-	"errors"
+	"fmt"
 
 	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
@@ -22,15 +22,14 @@ func SendMessage(botToken string, reciverId int64, m interface{}, parseMode tele
 	}
 	if noButton {
 		if _, err := bot.Send(reciver, m, parseMode); err != nil {
-			log.Printf("Send(%s,%d,%#v,%v) Msg Error: %v", botToken, reciverId, m, parseMode, err)
-			return errors.New("send message failed")
+			log.Errorf("Send(%s,%d,%#v,%v) Msg Error: %v", botToken, reciverId, m, parseMode, err)
+			return err
 		}
 	} else {
 		if _, err := bot.Send(reciver, m, parseMode, button); err != nil {
-			log.Printf("Send(%s,%d,%#v,%v) Msg Error: %v", botToken, reciverId, m, parseMode, err)
-			return errors.New("send message failed")
+			log.Errorf("Send(%s,%d,%#v,%v) Msg Error: %v", botToken, reciverId, m, parseMode, err)
+			return err
 		}
-
 	}
 
 	return nil

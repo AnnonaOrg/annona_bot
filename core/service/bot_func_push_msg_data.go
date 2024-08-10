@@ -43,6 +43,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	noButton := msg.NoButton
 
 	selector := &tele.ReplyMarkup{}
+	selector2 := &tele.ReplyMarkup{}
 	if !noButton {
 		if len(msg.FormInfo.FormChatID) > 0 {
 			noButton = false
@@ -73,9 +74,13 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			selector.Row(btnSender, btnChat, btnByKeyworld),
 			selector.Row(btnLink, btnByID, btnChatLink),
 		)
-		log.Debugf("btnLink: %+v", btnLink)
-		log.Debugf("btnByID: %+v", btnByID)
-		log.Debugf("btnChatLink: %+v", btnChatLink)
+		selector2.Inline(
+			selector2.Row(btnSender, btnChat, btnByKeyworld),
+			selector2.Row(btnLink, btnByID),
+		)
+		// log.Debugf("btnLink: %+v", btnLink)
+		// log.Debugf("btnByID: %+v", btnByID)
+		// log.Debugf("btnChatLink: %+v", btnChatLink)
 	}
 	// msgContentSuffix := ""
 	// if len(msg.FormInfo.FormChatTitle) > 0 {
@@ -88,8 +93,41 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	if len(msg.Text.ContentEx) > 0 {
 		messageContentText = msg.Text.ContentEx
 	} else if len(msg.Text.ContentHtml) > 0 {
-		messageContentText = msg.Text.ContentHtml
+		// messageContentText = msg.Text.ContentHtml
+		textTmp := ""
+		if len(msg.FormInfo.FormSenderTitle) > 0 {
+			textTmp = "发送人:" + msg.FormInfo.FormSenderTitle
+			if len(msg.FormInfo.FormSenderUsername) > 0 {
+				textTmp = textTmp + " @" + msg.FormInfo.FormSenderUsername
+			}
+		}
+		textTmp2 := ""
+		if len(msg.FormInfo.FormChatTitle) > 0 {
+			textTmp2 := "来源:"
+			if len(msg.FormInfo.FormChatUsername) > 0 {
+				textTmp2 = textTmp2 +
+					fmt.Sprintf("<a href=\"https://t.me/%s\">%s</a>",
+						msg.FormInfo.FormChatUsername, msg.FormInfo.FormChatTitle,
+					)
+			} else if len(msg.Link) > 0 {
+				textTmp2 = textTmp2 +
+					fmt.Sprintf("<a href=\"%s\">%s</a>",
+						msg.Link, msg.FormInfo.FormChatTitle,
+					)
+			} else {
+				textTmp2 = textTmp2 + msg.FormInfo.FormChatTitle
+			}
+		}
+		if len(textTmp) > 0 {
+			messageContentText = messageContentText + "\n" + textTmp
+		}
+		if len(textTmp2) > 0 {
+			messageContentText = messageContentText + "\n" + textTmp2
+		}
+		messageContentText = messageContentText + "\n" + "#ID" + msg.FormInfo.FormSenderID
+
 	}
+	// fmt.Println("messageContentText", messageContentText)
 
 	switch msg.Msgtype {
 	case "text":
@@ -164,7 +202,16 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			{
 				m := messageContentText //msg.Text.Content
 
-				return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+				err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+				if err != nil {
+					if strings.Contains(err.Error(), "BUTTON_USER_INVALID") {
+						if len(msg.FormInfo.FormSenderUsername) == 0 {
+							return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
+						}
+					}
+					return err
+				}
+				return nil
 			}
 		default:
 			return nil
