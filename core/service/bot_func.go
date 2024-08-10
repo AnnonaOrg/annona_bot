@@ -1,8 +1,6 @@
 package service
 
 import (
-	"fmt"
-
 	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
 )
