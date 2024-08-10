@@ -205,7 +205,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 				err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
 				if err != nil {
 					if strings.Contains(err.Error(), "BUTTON_USER_INVALID") {
-						if len(msg.FormInfo.FormSenderUsername) == 0 {
+						if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
 							return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
 						}
 					}
