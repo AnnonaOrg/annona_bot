@@ -24,6 +24,7 @@ type FeedRichMsgTextModel struct {
 	ContentEx       string `json:"contentEx"  form:"contentEx"`
 	ContentExPic    string `json:"contentExPic"  form:"contentExPic"`
 	ContentMarkdown string `json:"contentMarkdown"  form:"contentMarkdown"`
+	ContentHtml     string `json:"contentHtml"  form:"contentHtml"`
 }
 type FeedRichMsgImageModel struct {
 	PicURL   string `json:"picURL"  form:"picURL"`
