@@ -95,9 +95,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 				textTmp = textTmp + " @" + msg.FormInfo.FormSenderUsername
 			}
 		}
+
 		textTmp2 := ""
 		if len(msg.FormInfo.FormChatTitle) > 0 {
-			textTmp2 := "来源:"
+			textTmp2 = "来源:"
 			if len(msg.FormInfo.FormChatUsername) > 0 {
 				textTmp2 = textTmp2 +
 					fmt.Sprintf("<a href=\"https://t.me/%s\">%s</a>",
