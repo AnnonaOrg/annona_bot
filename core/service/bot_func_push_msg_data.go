@@ -87,6 +87,8 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	messageContentText := msg.Text.Content
 	if len(msg.Text.ContentEx) > 0 {
 		messageContentText = msg.Text.ContentEx
+	} else if len(msg.Text.ContentHtml) > 0 {
+		messageContentText = msg.Text.ContentHtml
 	}
 
 	switch msg.Msgtype {
@@ -162,7 +164,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			{
 				m := messageContentText //msg.Text.Content
 
-				return sendMessage(botToken, reciverId, m, tele.ModeDefault, noButton, selector)
+				return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
 			}
 		default:
 			return nil
