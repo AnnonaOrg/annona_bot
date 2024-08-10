@@ -98,6 +98,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 
 		textTmp2 := ""
 		if len(msg.FormInfo.FormChatTitle) > 0 {
+			
 			textTmp2 = "来源:"
 			if len(msg.FormInfo.FormChatUsername) > 0 {
 				textTmp2 = textTmp2 +
