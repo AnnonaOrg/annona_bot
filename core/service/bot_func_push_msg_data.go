@@ -113,6 +113,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 				textTmp2 = textTmp2 + msg.FormInfo.FormChatTitle
 			}
 		}
+
 		if len(textTmp) > 0 {
 			messageContentText = messageContentText + "\n" + textTmp
 		}
