@@ -94,7 +94,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	switch msg.Msgtype {
 	case "text":
 		m := messageContentText
-		return sendMessage(botToken, reciverId, m, tele.ModeDefault, noButton, selector)
+		return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
 
 	case "video":
 		m := new(tele.Video)
