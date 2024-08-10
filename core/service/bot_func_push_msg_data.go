@@ -82,13 +82,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		// log.Debugf("btnByID: %+v", btnByID)
 		// log.Debugf("btnChatLink: %+v", btnChatLink)
 	}
-	// msgContentSuffix := ""
-	// if len(msg.FormInfo.FormChatTitle) > 0 {
-	// 	msgContentSuffix = "来源:" + msg.FormInfo.FormChatTitle
-	// 	if len(msg.FormInfo.FormSenderTitle) > 0 {
-	// 		msgContentSuffix = "发送人:" + msg.FormInfo.FormSenderTitle + "\n" + msgContentSuffix
-	// 	}
-	// }
+
 	messageContentText := msg.Text.Content
 	if len(msg.Text.ContentEx) > 0 {
 		messageContentText = msg.Text.ContentEx
@@ -128,6 +122,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 
 	}
 	// fmt.Println("messageContentText", messageContentText)
+	log.Debugf("待发送消息:%s", messageContentText)
 
 	switch msg.Msgtype {
 	case "text":
