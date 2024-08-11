@@ -50,6 +50,9 @@ func OnEnableTelebotInfo(c tele.Context) error {
 			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	} else {
+		if len(retText) == 0 {
+			retText = "👌"
+		}
 		return c.Reply(retText)
 	}
 }
