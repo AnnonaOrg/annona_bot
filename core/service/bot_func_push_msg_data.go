@@ -98,7 +98,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 
 		textTmp2 := ""
 		if len(msg.FormInfo.FormChatTitle) > 0 {
-			
+
 			textTmp2 = "来源:"
 			if len(msg.FormInfo.FormChatUsername) > 0 {
 				textTmp2 = textTmp2 +
@@ -202,7 +202,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 
 				err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
 				if err != nil {
-					if strings.Contains(err.Error(), "BUTTON_USER_INVALID") {
+					if strings.Contains(err.Error(), "BUTTON_USER_INVALID") && IsRetryPushMsgEnable() {
 						if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
 							return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
 						}
