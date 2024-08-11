@@ -16,7 +16,7 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 	apiDomain := osenv.GetCoreApiUrl()
 	apiToken := osenv.GetCoreApiToken()
 	apiPath := "/apis/v1/keyword_history/list"
-
+	log.Debugf("%s%s", apiDomain, apiPath)
 	retBody, err := utils.DoPostJsonToOpenAPI(apiDomain, apiPath, apiToken, req)
 	if err != nil {
 		log.Errorf("DoPostJsonToOpenAPI(%s,%s,%s,%+v): %v", apiDomain, apiPath, apiToken, req, err)

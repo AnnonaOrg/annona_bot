@@ -122,7 +122,6 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			messageContentText = messageContentText + "\n" + textTmp2
 		}
 		messageContentText = messageContentText + "\n" + "#ID" + msg.FormInfo.FormSenderID
-
 	}
 	// fmt.Println("messageContentText", messageContentText)
 	log.Debugf("待发送消息:%s", messageContentText)
