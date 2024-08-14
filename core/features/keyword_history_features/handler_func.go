@@ -80,5 +80,5 @@ func OnByWorld(c tele.Context) error {
 			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	}
-	return c.Reply(retText)
+	return c.Reply(retText, tele.ModeHTML, tele.NoPreview)
 }
