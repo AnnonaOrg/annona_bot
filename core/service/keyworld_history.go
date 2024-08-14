@@ -22,7 +22,7 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 		log.Errorf("DoPostJsonToOpenAPI(%s,%s,%s,%+v): %v", apiDomain, apiPath, apiToken, req, err)
 		return nil, fmt.Errorf("服务请求出错: %v", err)
 	}
-	log.Debugf("retBody: %s", retBody)
+	// log.Debugf("retBody: %s", retBody)
 	var apiResponse response.KeyworldHistoryInfoResponse
 
 	err = json.Unmarshal(retBody, &apiResponse)
@@ -86,6 +86,7 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 	for k, v := range retList {
 		text := v.Note
 		if len(text) == 0 {
+			log.Debugf("retList: %d. %+v", k, v)
 			continue
 		}
 		// senderUsername := v.SenderUsername
