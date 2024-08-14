@@ -45,6 +45,7 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 		item.SenderId = vc.SenderId
 		item.KeyWorld = vc.KeyWorld
 		item.Total = vc.Total
+		item.MessageLink = vc.MessageLink
 		list = append(list, item)
 	}
 	return list, nil
@@ -87,10 +88,11 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 	retText := ""
 	for k, v := range retList {
 		text := v.Note
-		if len(text) == 0 {
+		if len(text) == 0 || len(v.MessageLink) == 0 {
 			log.Debugf("retList: %d. %+v", k, v)
 			continue
 		}
+
 		// senderUsername := v.SenderUsername
 		// if len(senderUsername) > 0 {
 		// 	senderUsername = "@" + senderUsername
@@ -100,9 +102,13 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		// retText = fmt.Sprintf("%s\n %d. %s", retText,
 		// 	k, senderUsername,
 		// )
-		retText = fmt.Sprintf("%s\n %d. %s", retText,
+		retTextTmp := fmt.Sprintf("%s\n %d. %s", retText,
 			k, text,
 		)
+		if len(retTextTmp) > 4096-1000 || len(retText) > 3000 {
+			break
+		}
+		retText = retTextTmp
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
 
