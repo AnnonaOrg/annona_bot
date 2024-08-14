@@ -92,7 +92,7 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, stri
 	for k, v := range retList {
 		text := v.Note
 		textHtml := v.NoteHtml
-		if len(v.Note) == 0 || len(v.textHtml) == 0 {
+		if len(text) == 0 || len(textHtml) == 0 {
 			log.Debugf("retList: %d. %+v", k, v)
 			continue
 		}
