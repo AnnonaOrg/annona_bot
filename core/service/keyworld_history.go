@@ -93,17 +93,15 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 			continue
 		}
 
-		// senderUsername := v.SenderUsername
-		// if len(senderUsername) > 0 {
-		// 	senderUsername = "@" + senderUsername
-		// } else {
-		// 	continue
-		// }
+		senderUsername := v.SenderUsername
+		if len(senderUsername) > 0 {
+			senderUsername = "@" + senderUsername
+		}
 		// retText = fmt.Sprintf("%s\n %d. %s", retText,
 		// 	k, senderUsername,
 		// )
-		retTextTmp := fmt.Sprintf("%s\n %d. %s", retText,
-			k, text,
+		retTextTmp := fmt.Sprintf("%s\n %d. %s %s", retText,
+			k, senderUsername, text,
 		)
 		if len(retTextTmp) > 4096-1000 || len(retText) > 3000 {
 			break
