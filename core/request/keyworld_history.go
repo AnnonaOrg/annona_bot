@@ -16,4 +16,6 @@ type KeyworldHistoryInfoRequest struct {
 	Page   int    `json:"-" form:"page" gorm:"-"`
 	Size   int    `json:"-" form:"size" gorm:"-"`
 	Filter string `json:"-" form:"filter" gorm:"-"`
+
+	Note string `json:"note" form:"-" gorm:"-"`
 }
