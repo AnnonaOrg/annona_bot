@@ -81,44 +81,39 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	}
 
 	messageContentText := msg.Text.Content
-	if len(msg.Text.ContentEx) > 0 {
-		messageContentText = msg.Text.ContentEx
-	} else if len(msg.Text.ContentHtml) > 0 {
-		// messageContentText = msg.Text.ContentHtml
-		textTmp := ""
+	if len(messageContentText) > 0 {
+		text := "关键词: #" + msg.FormInfo.FormKeyworld + " #ID" + msg.FormInfo.FormSenderID
 		if len(msg.FormInfo.FormSenderTitle) > 0 {
-			textTmp = "发送人:" + msg.FormInfo.FormSenderTitle
+			textTmp := "发送人:" + msg.FormInfo.FormSenderTitle
 			if len(msg.FormInfo.FormSenderUsername) > 0 {
 				textTmp = textTmp + " @" + msg.FormInfo.FormSenderUsername
 			}
+
+			text = text + "\n" + textTmp
 		}
 
-		textTmp2 := ""
 		if len(msg.FormInfo.FormChatTitle) > 0 {
-
-			textTmp2 = "来源:"
+			textTmp := "来源:"
 			if len(msg.FormInfo.FormChatUsername) > 0 {
-				textTmp2 = textTmp2 +
+				textTmp = textTmp +
 					fmt.Sprintf("<a href=\"https://t.me/%s\">%s</a>",
 						msg.FormInfo.FormChatUsername, msg.FormInfo.FormChatTitle,
 					)
 			} else if len(msg.Link) > 0 {
-				textTmp2 = textTmp2 +
+				textTmp = textTmp +
 					fmt.Sprintf("<a href=\"%s\">%s</a>",
 						msg.Link, msg.FormInfo.FormChatTitle,
 					)
 			} else {
-				textTmp2 = textTmp2 + msg.FormInfo.FormChatTitle
+				textTmp = textTmp + msg.FormInfo.FormChatTitle
 			}
+
+			text = text + "\n" + textTmp
 		}
 
-		if len(textTmp) > 0 {
-			messageContentText = messageContentText + "\n" + textTmp
-		}
-		if len(textTmp2) > 0 {
-			messageContentText = messageContentText + "\n" + textTmp2
-		}
-		messageContentText = messageContentText + "\n" + "#ID" + msg.FormInfo.FormSenderID
+		messageContentText = text + "\n" + messageContentText
+	} else {
+		return fmt.Errorf("msg(%+v).Text.Content is NULL", msg)
 	}
 	// fmt.Println("messageContentText", messageContentText)
 	log.Debugf("待发送消息:%s", messageContentText)

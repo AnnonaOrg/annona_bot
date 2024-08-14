@@ -7,24 +7,25 @@ Annona bot
 查询 user info 信息
 
 
-环境设置：
+## 环境设置
 ```env
 # bot webhook url
-BOT_TELEGRAM_WEBHOOK_URL=https://xxx/webhook
+BOT_TELEGRAM_WEBHOOK_URL=https://xxx/webhook/tele
 ```
 
-设置 webhook
+## 设置 webhook
 
-post  https://xxx/webhook/botToken
+post  https://xxx/webhook/tele/botToken
 
 or
 
-get/post  https://xxx/setWebhook/botToken
+get/post  https://xxx/webhook/set/botToken
 
 ```
-curl -d '' -X POST  https://xxx/setWebhook/botToken
+curl -d '' -X POST  https://xxx/webhook/set/botToken
 ```
 
+## 启用机器人，同步机器人信息到core
 ```
 /botenable
 ```

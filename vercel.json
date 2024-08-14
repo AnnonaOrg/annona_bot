@@ -1,23 +1,15 @@
 {
     "routes": [
         {
-            "src": "/dev",
-            "dest": "/api/dev/index.go"
-        },
-        {
-            "src": "/ws/push/.*",
-            "dest": "/api/push/index.go"
-        },
-        {
             "src": "/ws/push_v2/.*",
             "dest": "/api/push_v2/index.go"
         },
         {
-            "src": "/setWebhook/.*",
+            "src": "/webhook/set/.*",
             "dest": "/api/setwebhook/index.go"
         },
         {
-            "src": "/webhook/.*",
+            "src": "/webhook/tele/.*",
             "dest": "/api/index.go"
         },
         {

@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/AnnonaOrg/annona_bot/handler/api_handler"
+	"github.com/AnnonaOrg/annona_bot/handler/bot_handler"
 	"github.com/AnnonaOrg/annona_bot/handler/webhook_handler/tele_handler"
 	"github.com/AnnonaOrg/annona_bot/handler/wspush"
 
@@ -24,6 +25,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	webhookR := g.Group("/webhook")
 	{
 		webhookR.POST("/tele/:botToken", tele_handler.Update)
+
+		webhookR.POST("/set/:botToken", bot_handler.SetWebhook)
 	}
 
 	wspushR := g.Group("/ws")

@@ -31,29 +31,29 @@ func mainBot() {
 			Description: "开始",
 		},
 		{
-			Text:        "/id",
-			Description: "获取ID",
+			Text:        "/sign",
+			Description: "签到",
 		},
 		{
-			Text:        "/ping",
-			Description: "Ping",
+			Text:        "/renewuser",
+			Description: "充值卡兑换",
 		},
-		// {
-		// 	Text:        "/about",
-		// 	Description: "About",
-		// },
 		{
-			Text:        "/version",
-			Description: "查看版本",
-		},
-
-		{
-			Text:        "/reguser",
-			Description: "注册登记",
+			Text:        "/getcard",
+			Description: "查询卡信息",
 		},
 		{
 			Text:        "/getuser",
 			Description: "用户信息",
+		},
+
+		{
+			Text:        "/updatenoticechatid",
+			Description: "更换通知会话ID",
+		},
+		{
+			Text:        "/convert",
+			Description: "兑换克莱因瓶",
 		},
 		{
 			Text:        "/addkeyword",
@@ -71,13 +71,76 @@ func mainBot() {
 			Text:        "/listkeyworld",
 			Description: "列出关键词",
 		},
+
 		{
-			Text:        "/renewuser",
-			Description: "充值卡兑换",
+			Text:        "/addblockword",
+			Description: "添加屏蔽关键词",
 		},
 		{
-			Text:        "/getcard",
-			Description: "查询卡信息",
+			Text:        "/delblockword",
+			Description: "删除屏蔽关键词",
+		},
+		{
+			Text:        "/delallblockword",
+			Description: "删除全部屏蔽关键词",
+		},
+		{
+			Text:        "/listblockword",
+			Description: "列出屏蔽关键词",
+		},
+
+		{
+			Text:        "/addblockformsenderid",
+			Description: "添加屏蔽发送者ID",
+		},
+		{
+			Text:        "/delblockformsenderid",
+			Description: "删除屏蔽发送者ID",
+		},
+		{
+			Text:        "/delallblockformsenderid",
+			Description: "删除全部屏蔽发送者ID",
+		},
+		{
+			Text:        "/listblockformsenderid",
+			Description: "列出屏蔽发送者ID",
+		},
+
+		{
+			Text:        "/addblockformchatid",
+			Description: "添加屏蔽群组ID",
+		},
+		{
+			Text:        "/delblockformchatid",
+			Description: "删除屏蔽群组ID",
+		},
+		{
+			Text:        "/delallblockformchatid",
+			Description: "删除全部屏蔽群组ID",
+		},
+		{
+			Text:        "/listblockformchatid",
+			Description: "列出屏蔽群组ID",
+		},
+		{
+			Text:        "/byid",
+			Description: "通过用户ID查询",
+		},
+		{
+			Text:        "/byworld",
+			Description: "通过关键词查询",
+		},
+		{
+			Text:        "/reguser",
+			Description: "注册登记",
+		},
+		{
+			Text:        "/ping",
+			Description: "Ping",
+		},
+		{
+			Text:        "/version",
+			Description: "查看版本",
 		},
 	}
 	bot.SetCommands(commands)
