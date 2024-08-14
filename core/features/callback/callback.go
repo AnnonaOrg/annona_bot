@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AnnonaOrg/annona_bot/core/service/tele_service"
+
 	"github.com/AnnonaOrg/annona_bot/core/blockword_func"
 	"github.com/AnnonaOrg/annona_bot/core/keyword_func"
 	"github.com/AnnonaOrg/annona_bot/core/log"
@@ -75,12 +77,17 @@ func OnCallback(c tele.Context) error {
 		}
 	case strings.HasPrefix(payload, "/by_formkeyworld"):
 		{
-			if retText, err := service.GetListKeyworldHistoryWithKeyworld(payloadBody, 1); err != nil {
+			if retText, retTextAll, err := service.GetListKeyworldHistoryWithKeyworld(payloadBody, 1); err != nil {
 				return c.Reply(
 					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
-				return c.Reply(retText, tele.ModeHTML, tele.NoPreview)
+				if len(retTextAll) > 4096 {
+					tele_service.SendFileWithString(c, retTextAll, retText)
+				} else {
+					c.Reply(retText, tele.ModeHTML, tele.NoPreview)
+				}
+				return nil
 			}
 		}
 	case strings.HasPrefix(payload, "/block_formchatid"):

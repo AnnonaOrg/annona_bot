@@ -39,6 +39,7 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 		vc := v
 		var item response.KeyworldHistoryInfoItem
 		item.Note = vc.Note
+		item.NoteHtml = vc.NoteHtml
 
 		item.MessageContentText = vc.MessageContentText
 		item.SenderUsername = vc.SenderUsername
@@ -76,19 +77,22 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error
 	return retText, nil
 }
 
-func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, error) {
+// retTextHtml,retTextAll,err
+func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, string, error) {
 	req := &request.KeyworldHistoryInfoRequest{}
 	req.KeyWorld = keyworld
 	req.Page = page
 	req.Size = 50
 	retList, err := GetListKeyworldHistory(req)
 	if err != nil {
-		return constvar.ERR_MSG_Server, err
+		return constvar.ERR_MSG_Server, constvar.ERR_MSG_Server, err
 	}
 	retText := ""
+	retTextAll := ""
 	for k, v := range retList {
 		text := v.Note
-		if len(text) == 0 || len(v.MessageLink) == 0 {
+		textHtml := v.NoteHtml
+		if len(v.Note) == 0 || len(v.MessageLink) == 0 {
 			log.Debugf("retList: %d. %+v", k, v)
 			continue
 		}
@@ -97,19 +101,22 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		if len(senderUsername) > 0 {
 			senderUsername = "@" + senderUsername
 		}
-		// retText = fmt.Sprintf("%s\n %d. %s", retText,
-		// 	k, senderUsername,
-		// )
+
 		retTextTmp := fmt.Sprintf("%s\n %d. %s %s", retText,
-			k, senderUsername, text,
+			k, senderUsername, textHtml,
 		)
-		if len(retTextTmp) > 4096-1000 || len(retText) > 3000 {
-			break
+		if len(retTextTmp) < 4096-1000 && len(retText) > 3000 {
+			retText = retTextTmp
 		}
-		retText = retTextTmp
+
+		retTextAll = fmt.Sprintf("%s\n %d. %s\n  %s", retTextAll,
+			k, senderUsername,
+			text,
+		)
+
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
 
 	log.Debugf("GetListKeyworldHistoryWithKeyworld(%s): %s", keyworld, retText)
-	return retText, nil
+	return retText, retTextAll, nil
 }
