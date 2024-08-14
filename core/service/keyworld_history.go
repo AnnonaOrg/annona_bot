@@ -106,7 +106,7 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, stri
 			retTextTmp := fmt.Sprintf("%s\n %d. %s %s", retText,
 				k, senderUsername, textHtml,
 			)
-			if len(retTextTmp) < 4096-1000 && len(retText) > 3000 {
+			if len(retTextTmp) < 4096-1000 && len(retText) < 3000 {
 				retText = retTextTmp
 			}
 		}
@@ -117,7 +117,6 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, stri
 				text,
 			)
 		}
-
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
 
