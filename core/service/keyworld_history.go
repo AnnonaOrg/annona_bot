@@ -105,7 +105,7 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		retTextTmp := fmt.Sprintf("%s\n %d. %s", retText,
 			k, text,
 		)
-		if len(retTextTmp) > 4096-200 || len(retText) > 3000 {
+		if len(retTextTmp) > 4096-1000 || len(retText) > 3000 {
 			break
 		}
 		retText = retTextTmp
