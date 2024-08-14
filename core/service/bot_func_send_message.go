@@ -19,12 +19,12 @@ func SendMessage(botToken string, reciverId int64, m interface{}, parseMode tele
 		ID: reciverId,
 	}
 	if noButton {
-		if _, err := bot.Send(reciver, m, parseMode); err != nil {
+		if _, err := bot.Send(reciver, m, parseMode, tele.NoPreview); err != nil {
 			log.Errorf("Send(%s,%d,%#v,%v) Msg Error: %v", botToken, reciverId, m, parseMode, err)
 			return err
 		}
 	} else {
-		if _, err := bot.Send(reciver, m, parseMode, button); err != nil {
+		if _, err := bot.Send(reciver, m, parseMode, button, tele.NoPreview); err != nil {
 			log.Errorf("Send(%s,%d,%#v,%v,%+v) Msg Error: %v", botToken, reciverId, m, parseMode, button, err)
 			return err
 		}
