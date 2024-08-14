@@ -16,7 +16,7 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 	apiDomain := osenv.GetCoreApiUrl()
 	apiToken := osenv.GetCoreApiToken()
 	apiPath := "/apis/v1/keyword_history/list"
-	log.Debugf("%s%s", apiDomain, apiPath)
+	// log.Debugf("%s%s", apiDomain, apiPath)
 	retBody, err := utils.DoPostJsonToOpenAPI(apiDomain, apiPath, apiToken, req)
 	if err != nil {
 		log.Errorf("DoPostJsonToOpenAPI(%s,%s,%s,%+v): %v", apiDomain, apiPath, apiToken, req, err)
@@ -102,9 +102,10 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, stri
 			senderUsername = "@" + senderUsername
 		}
 
-		if len(textHtml) > 0 {
-			retTextTmp := fmt.Sprintf("%s\n %d. %s %s", retText,
-				k, senderUsername, textHtml,
+		if len(textHtml) > 0 && len(senderUsername) > 0 {
+			retTextTmp := fmt.Sprintf("%s\n%d. %s\n %s", retText,
+				k, senderUsername,
+				textHtml,
 			)
 			if len(retTextTmp) < 4096-1000 && len(retText) < 3000 {
 				retText = retTextTmp
@@ -112,7 +113,7 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, stri
 		}
 
 		if len(text) > 0 {
-			retTextAll = fmt.Sprintf("%s\n %d. %s\n  %s", retTextAll,
+			retTextAll = fmt.Sprintf("%s\n%d. %s\n  %s", retTextAll,
 				k, senderUsername,
 				text,
 			)
@@ -120,6 +121,6 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, stri
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
 
-	log.Debugf("GetListKeyworldHistoryWithKeyworld(%s): %s", keyworld, retText)
+	// log.Debugf("GetListKeyworldHistoryWithKeyworld(%s): %s", keyworld, retText)
 	return retText, retTextAll, nil
 }
