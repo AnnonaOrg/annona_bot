@@ -38,6 +38,8 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 	for _, v := range apiResponse.Data.Items {
 		vc := v
 		var item response.KeyworldHistoryInfoItem
+		item.Note = vc.Note
+
 		item.MessageContentText = vc.MessageContentText
 		item.SenderUsername = vc.SenderUsername
 		item.SenderId = vc.SenderId
