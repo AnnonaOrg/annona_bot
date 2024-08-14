@@ -6,6 +6,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/AnnonaOrg/annona_bot/core/service/tele_service"
+
 	"github.com/AnnonaOrg/annona_bot/core/constvar"
 	"github.com/AnnonaOrg/annona_bot/core/features"
 	"github.com/AnnonaOrg/annona_bot/core/service"
@@ -74,11 +76,16 @@ func OnByWorld(c tele.Context) error {
 		)
 	}
 	payload := strings.TrimSpace(c.Message().Payload)
-	retText, err := service.GetListKeyworldHistoryWithKeyworld(payload, 1)
+	retText, retTextAll, err := service.GetListKeyworldHistoryWithKeyworld(payload, 1)
 	if err != nil {
 		return c.Reply(
 			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	}
-	return c.Reply(retText, tele.ModeHTML, tele.NoPreview)
+	if len(retTextAll) > 4096 {
+		tele_service.SendFileWithString(c, retTextAll, retText)
+	} else {
+		c.Reply(retText, tele.ModeHTML, tele.NoPreview)
+	}
+	return nil
 }

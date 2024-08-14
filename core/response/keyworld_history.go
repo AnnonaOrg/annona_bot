@@ -25,5 +25,6 @@ type KeyworldHistoryInfoItem struct {
 	KeyWorld string `json:"key_world" form:"key_world" gorm:"column:key_world;"`
 	Total    int64  `json:"total" form:"total" gorm:"column:total;"`
 
-	Note string `json:"note" form:"-" gorm:"-"`
+	Note     string `json:"note" form:"-" gorm:"-"`
+	NoteHtml string `json:"note_html" form:"-" gorm:"-"`
 }
