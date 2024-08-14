@@ -102,5 +102,7 @@ func GetListKeyworldHistoryWithKeyworld(keyworld string, page int) (string, erro
 		)
 	}
 	retText = "关键词 #" + keyworld + ": " + retText
+
+	log.Debugf("GetListKeyworldHistoryWithKeyworld(%s): %s", keyworld, retText)
 	return retText, nil
 }
