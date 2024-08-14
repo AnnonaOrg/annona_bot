@@ -6,10 +6,9 @@ import (
 	"net/http"
 	"strings"
 
-	log "github.com/sirupsen/logrus"
-	// "github.com/AnnonaOrg/annona_bot/common"
 	_ "github.com/AnnonaOrg/annona_bot/cmd/annona_bot/distro/all"
 	"github.com/AnnonaOrg/annona_bot/core/features"
+	log "github.com/sirupsen/logrus"
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -19,7 +18,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		// log.Debugf("收到非法请求: %s", r.URL.Path)
 		return
 	}
-	_, botToken, ok := strings.Cut(r.URL.Path, "webhook/")
+	_, botToken, ok := strings.Cut(r.URL.Path, "webhook/tele/")
 	if len(botToken) == 0 || !ok {
 		log.Debugf("收到非法推送: %s", r.URL.Path)
 		return
@@ -40,22 +39,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		log.Errorf("NewBot出错: %v", err)
 		return
 	}
-	// common.Must(err)
-	// commands := []tele.Command{
-	// 	{
-	// 		Text:        "/ping",
-	// 		Description: "Ping",
-	// 	},
-	// 	{
-	// 		Text:        "/start",
-	// 		Description: "Start",
-	// 	},
-	// }
-	// bot.SetCommands(commands)
-	// webhookURL := os.Getenv("BOT_TELEGRAM_WEBHOOK_URL")
-	// if len(webhookURL) > 0 && strings.HasPrefix(webhookURL, "https") {
-	// 	utils.SetTelegramWebhook(botToken, webhookURL+"/"+botToken)
-	// }
+
 	features.Handle(bot)
 
 	var u tele.Update
@@ -64,6 +48,6 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		log.Errorf("json.Unmarshal(%s, &tele.Update): %v", string(body), err)
 		return
 	}
-	// common.Must(err)
+
 	bot.ProcessUpdate(u)
 }
