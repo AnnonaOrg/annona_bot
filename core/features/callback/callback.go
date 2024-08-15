@@ -67,12 +67,18 @@ func OnCallback(c tele.Context) error {
 				)
 			}
 
-			if retText, err := service.GetListKeyworldHistoryWithSenderID(bySenderID, 1); err != nil {
+			if retText, retTextAll, err := service.GetListKeyworldHistoryWithSenderID(bySenderID, 1); err != nil {
 				return c.Reply(
 					fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 				)
 			} else {
-				return c.Reply(retText)
+				// return c.Reply(retText)
+				if len(retTextAll) > 4096 {
+					tele_service.SendFileWithString(c, retTextAll, retText)
+				} else {
+					c.Reply(retText, tele.ModeHTML, tele.NoPreview)
+				}
+				return nil
 			}
 		}
 	case strings.HasPrefix(payload, "/by_formkeyworld"):
