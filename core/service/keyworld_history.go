@@ -60,7 +60,7 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, strin
 	req.Size = 50
 	retList, err := GetListKeyworldHistory(req)
 	if err != nil {
-		return constvar.ERR_MSG_Server, err
+		return constvar.ERR_MSG_Server, constvar.ERR_MSG_Server, err
 	}
 	retText := ""
 	senderUsername := ""
