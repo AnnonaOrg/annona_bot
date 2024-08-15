@@ -76,7 +76,7 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, strin
 		}
 
 		if len(textHtml) > 0 {
-			retTextTmp := fmt.Sprintf("%s\n  %s", retText,
+			retTextTmp := fmt.Sprintf("%s\n%s", retText,
 				textHtml,
 			)
 			if len(retTextTmp) < 4096-1000 && len(retText) < 3000 {
@@ -85,7 +85,7 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, strin
 		}
 
 		if len(text) > 0 {
-			retTextAll = fmt.Sprintf("%s\n  %s", retTextAll,
+			retTextAll = fmt.Sprintf("%s\n%s", retTextAll,
 				text,
 			)
 		}
