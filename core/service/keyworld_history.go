@@ -51,7 +51,9 @@ func GetListKeyworldHistory(req *request.KeyworldHistoryInfoRequest) ([]response
 	}
 	return list, nil
 }
-func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error) {
+
+// retTextHtml,retTextAll,err
+func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, string, error) {
 	req := &request.KeyworldHistoryInfoRequest{}
 	req.SenderId = senderID
 	req.Page = page
@@ -62,19 +64,36 @@ func GetListKeyworldHistoryWithSenderID(senderID int64, page int) (string, error
 	}
 	retText := ""
 	senderUsername := ""
+	retTextAll := ""
 	for k, v := range retList {
 		if len(v.SenderUsername) > 0 && len(senderUsername) == 0 {
 			senderUsername = "@" + v.SenderUsername
 		}
-		messageContentText := utils.GetStringRuneN(v.MessageContentText, 20)
-		retText = fmt.Sprintf("%s\n %d. %s", retText,
-			k, messageContentText,
-		)
+		text := v.Note
+		textHtml := v.NoteHtml
+		if len(text) == 0 || len(textHtml) == 0 {
+			log.Debugf("retList: %d. %+v", k, v)
+		}
+
+		if len(textHtml) > 0 {
+			retTextTmp := fmt.Sprintf("%s\n  %s", retText,
+				textHtml,
+			)
+			if len(retTextTmp) < 4096-1000 && len(retText) < 3000 {
+				retText = retTextTmp
+			}
+		}
+
+		if len(text) > 0 {
+			retTextAll = fmt.Sprintf("%s\n  %s", retTextAll,
+				text,
+			)
+		}
 	}
 	if len(retText) > 0 {
-		retText = fmt.Sprintf("#ID%d ", senderID) + senderUsername + retText
+		retText = fmt.Sprintf("#ID%d ", senderID) + senderUsername + "\n" + retText
 	}
-	return retText, nil
+	return retText, retTextAll, nil
 }
 
 // retTextHtml,retTextAll,err

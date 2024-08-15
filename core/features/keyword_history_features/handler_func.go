@@ -48,14 +48,18 @@ func OnByID(c tele.Context) error {
 			tele.ModeMarkdownV2,
 		)
 	}
-	retText, err := service.GetListKeyworldHistoryWithSenderID(userID, 1)
+	retText, retTextAll, err := service.GetListKeyworldHistoryWithSenderID(userID, 1)
 	if err != nil {
 		return c.Reply(
 			fmt.Sprintf("出了点问题: %v", constvar.ERR_MSG_Server),
 		)
 	}
-	return c.Reply(retText)
-
+	if len(retTextAll) > 4096 {
+		tele_service.SendFileWithString(c, retTextAll, retText)
+	} else {
+		c.Reply(retText, tele.ModeHTML, tele.NoPreview)
+	}
+	return nil
 }
 
 // Command: /start <PAYLOAD>
