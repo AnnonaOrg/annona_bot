@@ -6,25 +6,20 @@ import (
 	"strings"
 	"time"
 
-	"github.com/AnnonaOrg/annona_bot/core/service/tele_service"
-
+	model_func "github.com/AnnonaOrg/annona_bot/core/blockformchatid_func"
+	model_func2 "github.com/AnnonaOrg/annona_bot/core/blockformsenderid_func"
 	"github.com/AnnonaOrg/annona_bot/core/blockword_func"
+	"github.com/AnnonaOrg/annona_bot/core/constvar"
+	"github.com/AnnonaOrg/annona_bot/core/features"
 	"github.com/AnnonaOrg/annona_bot/core/keyword_func"
 	"github.com/AnnonaOrg/annona_bot/core/log"
 	"github.com/AnnonaOrg/annona_bot/core/service"
+	"github.com/AnnonaOrg/annona_bot/core/service/tele_service"
+	model "github.com/AnnonaOrg/annona_bot/model/blockformchatid_info"
+	model2 "github.com/AnnonaOrg/annona_bot/model/blockformsenderid_info"
 	"github.com/AnnonaOrg/annona_bot/model/blockword_info"
 	"github.com/AnnonaOrg/annona_bot/model/keyword_info"
-
-	model_func "github.com/AnnonaOrg/annona_bot/core/blockformchatid_func"
-	model "github.com/AnnonaOrg/annona_bot/model/blockformchatid_info"
-
-	model_func2 "github.com/AnnonaOrg/annona_bot/core/blockformsenderid_func"
-	model2 "github.com/AnnonaOrg/annona_bot/model/blockformsenderid_info"
-
-	"github.com/AnnonaOrg/annona_bot/core/constvar"
-	"github.com/AnnonaOrg/annona_bot/core/features"
 	"github.com/AnnonaOrg/osenv"
-
 	tele "gopkg.in/telebot.v3"
 )
 
@@ -38,7 +33,8 @@ func OnCallback(c tele.Context) error {
 	// 	return nil
 	// }
 
-	if (time.Now().Unix() - c.Message().Unixtime) > constvar.TIME_OUT_MAX_seconds {
+	if (time.Now().Unix()-c.Message().Unixtime) > constvar.TIME_OUT_MAX_seconds &&
+		c.Message().Private() {
 		log.Debugf("忽略超过 %d s(秒) 的消息处理", constvar.TIME_OUT_MAX_seconds)
 		return nil
 	}
