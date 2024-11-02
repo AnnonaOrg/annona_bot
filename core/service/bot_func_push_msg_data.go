@@ -77,10 +77,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		// 	selector.Row(btnSender, btnChat, btnByKeyworld),
 		// 	selector.Row(btnLink, btnByID, btnChatLink),
 		// )
-		// selector2.Inline(
-		// 	selector2.Row(btnSender, btnChat, btnByKeyworld),
-		// 	selector2.Row(btnLink, btnByID),
-		// )
+		selector2.Inline(
+			selector2.Row(btnSender, btnChat, btnByKeyworld),
+			selector2.Row(btnLink, btnByID),
+		)
 		// 检查用户ID 是否不支持DeepLink私聊
 		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID && len(msg.FormInfo.FormSenderUsername) == 0 {
 			// 已被标记 不带私聊按钮
@@ -225,10 +225,6 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 							}
 						}
 						if IsRetryPushMsgEnable() {
-							selector2.Inline(
-								selector2.Row(btnSender, btnChat, btnByKeyworld),
-								selector2.Row(btnLink, btnByID),
-							)
 							if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
 								return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
 							}
