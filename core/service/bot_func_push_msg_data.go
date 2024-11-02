@@ -67,17 +67,27 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			btnChatLink = selector.URL("私聊", "https://t.me/"+msg.FormInfo.FormSenderUsername)
 		}
 
-		selector.Inline(
-			selector.Row(btnSender, btnChat, btnByKeyworld),
-			selector.Row(btnLink, btnByID, btnChatLink),
-		)
-		selector2.Inline(
-			selector2.Row(btnSender, btnChat, btnByKeyworld),
-			selector2.Row(btnLink, btnByID),
-		)
-		// log.Debugf("btnLink: %+v", btnLink)
-		// log.Debugf("btnByID: %+v", btnByID)
-		// log.Debugf("btnChatLink: %+v", btnChatLink)
+		// selector.Inline(
+		// 	selector.Row(btnSender, btnChat, btnByKeyworld),
+		// 	selector.Row(btnLink, btnByID, btnChatLink),
+		// )
+		// selector2.Inline(
+		// 	selector2.Row(btnSender, btnChat, btnByKeyworld),
+		// 	selector2.Row(btnLink, btnByID),
+		// )
+		// 检查用户ID 是否不支持DeepLink私聊
+		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID {
+			selector.Inline(
+				selector.Row(btnSender, btnChat, btnByKeyworld),
+				selector.Row(btnLink, btnByID, btnChatLink),
+			)
+		} else {
+			selector.Inline(
+				selector.Row(btnSender, btnChat, btnByKeyworld),
+				selector.Row(btnLink, btnByID),
+			)
+		}
+
 	}
 
 	messageContentText := msg.Text.Content
@@ -198,10 +208,20 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 
 				err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
 				if err != nil {
-					if strings.Contains(err.Error(), "BUTTON_USER_INVALID") && IsRetryPushMsgEnable() {
-						if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
-							return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
+					if strings.Contains(err.Error(), "BUTTON_USER_INVALID") {
+						if len(msg.FormInfo.FormSenderUsername) == 0 {
+							// 标记用户ID 不支持DeepLink私聊
+							FIFOMapSet(msg.FormInfo.FormSenderID, "BUTTON_USER_INVALID")
+							if count := FIFOMapCount(); count > 100 {
+								FIFOMapRemoveOldest()
+							}
 						}
+						if IsRetryPushMsgEnable() {
+							if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
+								return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
+							}
+						}
+
 					}
 					return err
 				}
