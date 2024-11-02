@@ -82,7 +82,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		// 	selector2.Row(btnLink, btnByID),
 		// )
 		// 检查用户ID 是否不支持DeepLink私聊
-		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID {
+		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID && len(msg.FormInfo.FormSenderUsername) == 0 {
 			// 已被标记 不带私聊按钮
 			selector.Inline(
 				selector.Row(btnSender, btnChat, btnByKeyworld),
