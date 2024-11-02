@@ -106,29 +106,32 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			if len(msg.FormInfo.FormSenderUsername) > 0 {
 				textTmp = textTmp +
 					fmt.Sprintf("<a href=\"https://t.me/%s\">%s</a>",
-						msg.FormInfo.FormSenderUsername, msg.FormInfo.FormSenderTitle,
+						msg.FormInfo.FormSenderUsername,
+						utils.GetStringRuneN(msg.FormInfo.FormSenderTitle, 18),
 					)
 			} else {
-				textTmp = textTmp + msg.FormInfo.FormSenderTitle
+				textTmp = textTmp + utils.GetStringRuneN(msg.FormInfo.FormSenderTitle, 18)
 			}
 
 			text = text + "\n" + textTmp
 		}
 
 		if len(msg.FormInfo.FormChatTitle) > 0 {
-			textTmp := "来源:"
+			textTmp := "来源: "
 			if len(msg.FormInfo.FormChatUsername) > 0 {
 				textTmp = textTmp +
 					fmt.Sprintf("<a href=\"https://t.me/%s\">%s</a>",
-						msg.FormInfo.FormChatUsername, msg.FormInfo.FormChatTitle,
+						msg.FormInfo.FormChatUsername,
+						utils.GetStringRuneN(msg.FormInfo.FormChatTitle, 18),
 					)
 			} else if len(msg.Link) > 0 {
 				textTmp = textTmp +
 					fmt.Sprintf("<a href=\"%s\">%s</a>",
-						msg.Link, msg.FormInfo.FormChatTitle,
+						msg.Link,
+						utils.GetStringRuneN(msg.FormInfo.FormChatTitle, 18),
 					)
 			} else {
-				textTmp = textTmp + msg.FormInfo.FormChatTitle
+				textTmp = textTmp + utils.GetStringRuneN(msg.FormInfo.FormChatTitle, 18)
 			}
 
 			text = text + "\n" + textTmp
