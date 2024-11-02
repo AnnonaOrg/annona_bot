@@ -12,6 +12,12 @@ import (
 	tele "gopkg.in/telebot.v3"
 )
 
+var fifoMapMsgID *FIFOMap
+
+func init() {
+	fifoMapMsgID = NewFIFOMap()
+}
+
 // 推送FeedMsg信息
 func PushMsgData(data []byte) error {
 	var msg response.FeedRichMsgResponse // FeedRichMsgModel
@@ -22,12 +28,12 @@ func PushMsgData(data []byte) error {
 	if len(msg.MsgID) > 0 {
 		msgID := "msgID_" + msg.MsgID
 
-		if _, ok := FIFOMapGet(msgID); ok {
+		if _, ok := fifoMapMsgID.Get(msgID); ok {
 			return fmt.Errorf("msgID去重(%s)", msg.MsgID)
 		} else {
-			FIFOMapSet(msgID, true)
-			if c := FIFOMapCount(); c > 100 {
-				FIFOMapRemoveOldest()
+			fifoMapMsgID.Set(msgID, true)
+			if c := fifoMapMsgID.Count(); c > 50 {
+				fifoMapMsgID.RemoveOldest()
 			}
 		}
 	}
@@ -214,7 +220,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 						if len(msg.FormInfo.FormSenderUsername) == 0 && len(msg.FormInfo.FormSenderID) > 0 {
 							// 标记用户ID 不支持DeepLink私聊
 							FIFOMapSet(msg.FormInfo.FormSenderID, "BUTTON_USER_INVALID")
-							if count := FIFOMapCount(); count > 100 {
+							if count := FIFOMapCount(); count > 200 {
 								FIFOMapRemoveOldest()
 							}
 						}
