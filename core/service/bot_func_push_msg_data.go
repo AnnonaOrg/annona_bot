@@ -49,7 +49,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	noButton := msg.NoButton
 
 	selector := &tele.ReplyMarkup{}
-	// selector2 := &tele.ReplyMarkup{}
+	selector2 := &tele.ReplyMarkup{}
 	if !noButton {
 		if len(msg.FormInfo.FormChatID) > 0 {
 			noButton = false
@@ -82,7 +82,7 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		// 	selector2.Row(btnLink, btnByID),
 		// )
 		// 检查用户ID 是否不支持DeepLink私聊
-		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID {
+		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID && len(msg.FormInfo.FormSenderUsername) == 0 {
 			// 已被标记 不带私聊按钮
 			selector.Inline(
 				selector.Row(btnSender, btnChat, btnByKeyworld),
@@ -224,11 +224,15 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 								FIFOMapRemoveOldest()
 							}
 						}
-						// if IsRetryPushMsgEnable() {
-						// 	if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
-						// 		return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
-						// 	}
-						// }
+						if IsRetryPushMsgEnable() {
+							selector2.Inline(
+								selector2.Row(btnSender, btnChat, btnByKeyworld),
+								selector2.Row(btnLink, btnByID),
+							)
+							if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
+								return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
+							}
+						}
 
 					}
 					return err
