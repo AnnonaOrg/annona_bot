@@ -79,12 +79,12 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID {
 			selector.Inline(
 				selector.Row(btnSender, btnChat, btnByKeyworld),
-				selector.Row(btnLink, btnByID, btnChatLink),
+				selector.Row(btnLink, btnByID),
 			)
 		} else {
 			selector.Inline(
 				selector.Row(btnSender, btnChat, btnByKeyworld),
-				selector.Row(btnLink, btnByID),
+				selector.Row(btnLink, btnByID, btnChatLink),
 			)
 		}
 
