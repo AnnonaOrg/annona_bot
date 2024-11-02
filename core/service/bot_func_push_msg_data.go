@@ -84,9 +84,14 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	if len(messageContentText) > 0 {
 		text := "关键词: #" + msg.FormInfo.FormKeyworld + " #ID" + msg.FormInfo.FormSenderID
 		if len(msg.FormInfo.FormSenderTitle) > 0 {
-			textTmp := "发送人:" + msg.FormInfo.FormSenderTitle
+			textTmp := "发送人:"
 			if len(msg.FormInfo.FormSenderUsername) > 0 {
-				textTmp = textTmp + " @" + msg.FormInfo.FormSenderUsername
+				textTmp = textTmp +
+					fmt.Sprintf("<a href=\"https://t.me/%s\">%s</a>",
+						msg.FormInfo.FormSenderUsername, msg.FormInfo.FormSenderTitle,
+					)
+			} else {
+				textTmp = textTmp + msg.FormInfo.FormSenderTitle
 			}
 
 			text = text + "\n" + textTmp
