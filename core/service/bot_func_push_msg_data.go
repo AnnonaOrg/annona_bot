@@ -71,30 +71,33 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 		btnChatLink := selector.URL("私聊", "tg://user?id="+msg.FormInfo.FormSenderID)
 		if len(msg.FormInfo.FormSenderUsername) > 0 {
 			btnChatLink = selector.URL("私聊", "https://t.me/"+msg.FormInfo.FormSenderUsername)
+		} else if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID {
+			// 已被标记 更换为IOS兼容私聊地址
+			btnChatLink = selector.URL("私聊", "https://t.me/@id"+msg.FormInfo.FormSenderID)
 		}
 
-		// selector.Inline(
-		// 	selector.Row(btnSender, btnChat, btnByKeyworld),
-		// 	selector.Row(btnLink, btnByID, btnChatLink),
-		// )
 		selector2.Inline(
 			selector2.Row(btnSender, btnChat, btnByKeyworld),
 			selector2.Row(btnLink, btnByID),
 		)
-		// 检查用户ID 是否不支持DeepLink私聊
-		if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID && len(msg.FormInfo.FormSenderUsername) == 0 {
-			// 已被标记 不带私聊按钮
-			selector.Inline(
-				selector.Row(btnSender, btnChat, btnByKeyworld),
-				selector.Row(btnLink, btnByID),
-			)
-		} else {
-			// 未被标记，带私聊按钮
-			selector.Inline(
-				selector.Row(btnSender, btnChat, btnByKeyworld),
-				selector.Row(btnLink, btnByID, btnChatLink),
-			)
-		}
+		selector.Inline(
+			selector.Row(btnSender, btnChat, btnByKeyworld),
+			selector.Row(btnLink, btnByID, btnChatLink),
+		)
+		// // 检查用户ID 是否不支持DeepLink私聊
+		// if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID && len(msg.FormInfo.FormSenderUsername) == 0 {
+		// 	// 已被标记 不带私聊按钮
+		// 	selector.Inline(
+		// 		selector.Row(btnSender, btnChat, btnByKeyworld),
+		// 		selector.Row(btnLink, btnByID),
+		// 	)
+		// } else {
+		// 	// 未被标记，带私聊按钮
+		// 	selector.Inline(
+		// 		selector.Row(btnSender, btnChat, btnByKeyworld),
+		// 		selector.Row(btnLink, btnByID, btnChatLink),
+		// 	)
+		// }
 
 	}
 
