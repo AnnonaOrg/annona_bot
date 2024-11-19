@@ -13,9 +13,11 @@ import (
 )
 
 var fifoMapMsgID *FIFOMap
+var reciverFifoMap *FIFOMap
 
 func init() {
 	fifoMapMsgID = NewFIFOMap()
+	reciverFifoMap = NewFIFOMap()
 }
 
 // 推送FeedMsg信息
@@ -47,6 +49,17 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	reciverId := msg.ChatInfo.ToChatID
 	botToken := msg.BotInfo.BotToken
 	noButton := msg.NoButton
+	if IsEnableFilterSameSenderUserMsg() {
+		reciverKey := fmt.Sprintf("%s_%d", msg.FormInfo.FormChatID, reciverId)
+		if _, ok := reciverFifoMap.Get(reciverKey); ok {
+			return fmt.Errorf("过滤短时间内同一个用户多次触发的消息(%s)", reciverKey)
+		} else {
+			reciverFifoMap.Set(reciverKey, true)
+			if c := reciverFifoMap.Count(); c > 500 {
+				reciverFifoMap.RemoveOldest()
+			}
+		}
+	}
 
 	selector := &tele.ReplyMarkup{}
 	selector2 := &tele.ReplyMarkup{}
@@ -84,20 +97,6 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			selector.Row(btnSender, btnChat, btnByKeyworld),
 			selector.Row(btnLink, btnByID, btnChatLink),
 		)
-		// // 检查用户ID 是否不支持DeepLink私聊
-		// if _, isINVALIDUserID := FIFOMapGet(msg.FormInfo.FormSenderID); isINVALIDUserID && len(msg.FormInfo.FormSenderUsername) == 0 {
-		// 	// 已被标记 不带私聊按钮
-		// 	selector.Inline(
-		// 		selector.Row(btnSender, btnChat, btnByKeyworld),
-		// 		selector.Row(btnLink, btnByID),
-		// 	)
-		// } else {
-		// 	// 未被标记，带私聊按钮
-		// 	selector.Inline(
-		// 		selector.Row(btnSender, btnChat, btnByKeyworld),
-		// 		selector.Row(btnLink, btnByID, btnChatLink),
-		// 	)
-		// }
 
 	}
 
