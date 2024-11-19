@@ -23,8 +23,8 @@ func IsEnableFilterSameSenderUserMsg() bool {
 	// Filter messages triggered multiple times by the same user within a short period of time
 	return strings.EqualFold(osenv.Getenv("FILTER_SAME_SENDER_USER_MSG_ENABLE"), "true")
 }
-func GetMinCountFilterSameSenderUserMsg() int {
-	item := osenv.Getenv("FILTER_SAME_SENDER_USER_MSG_MINI_COUNT")
+func GetMaxCountFilterSameSenderUserMsg() int {
+	item := osenv.Getenv("FILTER_SAME_SENDER_USER_MSG_MAX_COUNT")
 	count, err := strconv.Atoi(item)
 	if err != nil || count == 0 {
 		return 500

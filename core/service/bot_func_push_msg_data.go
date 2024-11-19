@@ -55,7 +55,8 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 			return fmt.Errorf("过滤短时间内同一个用户多次触发的消息(%s)", reciverKey)
 		} else {
 			reciverFifoMap.Set(reciverKey, true)
-			if c := reciverFifoMap.Count(); c > 500 {
+			maxCount := GetMaxCountFilterSameSenderUserMsg()
+			if c := reciverFifoMap.Count(); c > maxCount {
 				reciverFifoMap.RemoveOldest()
 			}
 		}
