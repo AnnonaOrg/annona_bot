@@ -49,16 +49,11 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	reciverId := msg.ChatInfo.ToChatID
 	botToken := msg.BotInfo.BotToken
 	noButton := msg.NoButton
+	reciverKey := fmt.Sprintf("%s_%d", msg.FormInfo.FormChatID, reciverId)
 	if IsEnableFilterSameSenderUserMsg() {
-		reciverKey := fmt.Sprintf("%s_%d", msg.FormInfo.FormChatID, reciverId)
+		// reciverKey := fmt.Sprintf("%s_%d", msg.FormInfo.FormChatID, reciverId)
 		if _, ok := reciverFifoMap.Get(reciverKey); ok {
 			return fmt.Errorf("过滤短时间内同一个用户多次触发的消息(%s)", reciverKey)
-		} else {
-			reciverFifoMap.Set(reciverKey, true)
-			maxCount := GetMaxCountFilterSameSenderUserMsg()
-			if c := reciverFifoMap.Count(); c > maxCount {
-				reciverFifoMap.RemoveOldest()
-			}
 		}
 	}
 
@@ -150,7 +145,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 	switch msg.Msgtype {
 	case "text":
 		m := messageContentText
-		return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+		if err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector); err != nil {
+			log.Errorf("sendMessage(%d): %v", reciverId, err)
+			return err
+		}
 
 	case "video":
 		m := new(tele.Video)
@@ -164,7 +162,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 				m.Caption = captionTmp
 			}
 		}
-		return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+		if err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector); err != nil {
+			log.Errorf("sendMessage(%d): %v", reciverId, err)
+			return err
+		}
 
 	case "image":
 		m := new(tele.Photo)
@@ -178,7 +179,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 				m.Caption = captionTmp
 			}
 		}
-		return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+		if err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector); err != nil {
+			log.Errorf("sendMessage(%d): %v", reciverId, err)
+			return err
+		}
 
 	case "rich":
 		switch {
@@ -197,7 +201,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 						m.Caption = captionTmp
 					}
 				}
-				return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+				if err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector); err != nil {
+					log.Errorf("sendMessage(%d): %v", reciverId, err)
+					return err
+				}
 			}
 		case len(msg.Image.PicURL) > 0 && strings.HasPrefix(msg.Image.PicURL, "http"):
 			{
@@ -214,7 +221,10 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 						m.Caption = captionTmp
 					}
 				}
-				return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector)
+				if err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector); err != nil {
+					log.Errorf("sendMessage(%d): %v", reciverId, err)
+					return err
+				}
 			}
 		case len(msg.Text.Content) > 0:
 			{
@@ -232,19 +242,28 @@ func buildMsgDataAndSend(msg response.FeedRichMsgResponse,
 						}
 						if IsRetryPushMsgEnable() {
 							if len(msg.FormInfo.FormSenderUsername) == 0 && (len(msg.Link) > 0 || len(msg.FormInfo.FormChatUsername) > 0) {
-								return sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2)
+								if err := sendMessage(botToken, reciverId, m, tele.ModeHTML, noButton, selector2); err != nil {
+									log.Errorf("sendMessage(%d): %v", reciverId, err)
+									return err
+								}
 							}
 						}
 
 					}
 					return err
 				}
-				return nil
+
 			}
 		default:
-			return nil
+
 		}
 	default:
 		return errors.New("msg type is not support,")
 	}
+	reciverFifoMap.Set(reciverKey, true)
+	maxCount := GetMaxCountFilterSameSenderUserMsg()
+	if c := reciverFifoMap.Count(); c > maxCount {
+		reciverFifoMap.RemoveOldest()
+	}
+	return nil
 }
