@@ -10,6 +10,8 @@ echo "APP_VERSION = \"${VERSION}\")" >> ./core/constvar/version.go
 go fmt ./core/constvar
 
 rm ./cmd/annona_bot/annona_bot
+
+ssh-add -D
 #git init #
 git add .
 git commit -m "v${VERSION} debug"
